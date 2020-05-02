@@ -1,0 +1,4 @@
+RENEW := aws-okta exec exmple --
+
+login:
+	$(RENEW) bin/vault login -method=aws header_value=vault role=example

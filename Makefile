@@ -2,7 +2,7 @@ SHELL := /bin/bash
 
 .PHONY: backup
 
-RENEW := aws-okta exec fogg-security-us-west-1 --
+include Makefile.site
 
 logs: # Logs for docker-compose
 	docker-compose logs -f
@@ -52,8 +52,8 @@ begin:
 	$(MAKE) renew
 	$(MAKE) recreate
 	sleep 5
-	$(MAKE) login
-	$(MAKE) login2
+	$(MAKE) root-login
+	$(MAKE) root-login2
 
 end:
 	$(MAKE) renew
@@ -65,17 +65,14 @@ end:
 lock:
 	git-crypt lock
 
-login:
-	@$(RENEW) bin/vault-ddb login "$(shell cat .vault-root-token)"
+root-login:
+	@$(RENEW) bin/vault-ddb login "$(shell cat backup/.vault-root-token)"
 
 seal:
 	$(RENEW) bin/vault-ddb operator seal
 
-login2:
-	@$(RENEW) bin/vault-s3 login "$(shell cat .vault-root-token)"
+root-login2:
+	@$(RENEW) bin/vault-s3 login "$(shell cat backup/.vault-root-token)"
 
 seal2:
 	$(RENEW) bin/vault-s3 operator seal
-
-defn:
-	$(RENEW) bin/vault login -method=aws header_value=vault role=defn
