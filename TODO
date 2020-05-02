@@ -1,0 +1,6 @@
+vault auth enable aws
+vault write auth/aws/config/client iam_server_id_header_value=vault
+
+vault write auth/aws/role/defn auth_type=iam bound_iam_principal_arn=arn:aws:iam::372333168887:role/admin max_ttl=15m policies=defn
+
+vault login -method=aws header_value=vault role=defn
