@@ -4,5 +4,5 @@ storage_source "s3" {
 }
 
 storage_destination "file" {
-  path = "backup/vault2"
+  path = "backup/vault-s3"
 }

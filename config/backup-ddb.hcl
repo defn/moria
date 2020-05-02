@@ -4,5 +4,5 @@ storage_source "dynamodb" {
 }
 
 storage_destination "file" {
-  path = "backup/vault"
+  path = "backup/vault-ddb"
 }
