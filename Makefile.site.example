@@ -1,5 +1,7 @@
-renew:
-	aws-okta env example  | grep ' AWS_' | sed 's#export ##' > .env
+RENEW := aws-okta exec example --
 
 login:
-	aws-okta exec example -- bin/vault login -method=aws header_value=vault role=example >/dev/null
+	$(RENEW) bin/vault login -method=aws header_value=vault role=example >/dev/null
+
+bash:
+	$(RENEW) env VAULT_ADDR=http://127.0.0.1:8200 bash
