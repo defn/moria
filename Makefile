@@ -48,12 +48,17 @@ renew:
 	aws-okta write-to-credentials --assume-role-ttl=15m fogg-security .aws/credentials.tmp
 	perl -pe 's{^\[.*}{[default]}' -i .aws/credentials.tmp
 	mv -f .aws/credentials.tmp .aws/credentials
+	$(MAKE) renew-copy
+	rm -f .aws/credentials
+
+renew-copy:
+	docker cp .aws/credentials "$(shell docker-compose ps -q vault-ddb)":.aws/
+	docker cp .aws/credentials "$(shell docker-compose ps -q vault-s3)":.aws/
 
 begin:
 	docker-compose build
-	$(MAKE) renew
 	$(MAKE) recreate
-	sleep 5
+	$(MAKE) renew
 	cd backup && git-crypt unlock
 	$(MAKE) root-login
 	$(MAKE) root-login2

@@ -3,20 +3,18 @@ services:
   vault-ddb:
     build: .
     hostname: "vault"
+    restart: on-failure
     environment:
       VAULT_ADDR: http://127.0.0.1:8200
     ports:
       - 8200:8200
-    volumes:
-      - ./.aws:/root/.aws
     entrypoint: vault server -config=/config/vault-ddb.hcl
   vault-s3:
     build: .
     hostname: "vault"
+    restart: on-failure
     environment:
       VAULT_ADDR: http://127.0.0.1:8200
     ports:
       - 8201:8200
-    volumes:
-      - ./.aws:/root/.aws
     entrypoint: vault server -config=/config/vault-s3.hcl
