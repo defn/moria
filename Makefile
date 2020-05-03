@@ -53,6 +53,6 @@ seal:
 clean:
 	$(MAKE) seal
 
-ddb s3 file:
+ddb s3 file-ddb file-s3:
 	ln -nfs vault-$@ config/vault
 	$(MAKE) begin

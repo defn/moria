@@ -15,3 +15,5 @@ services:
       - AWS_SESSION_TOKEN
     ports:
       - 8200:8200
+    volumes:
+      - ./backup:/vault

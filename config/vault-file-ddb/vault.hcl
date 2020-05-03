@@ -1,7 +1,7 @@
 ui = true
 
 storage "file" {
-  path = "/vault"
+  path = "/vault/vault-ddb"
 }
 
 listener "tcp" {
