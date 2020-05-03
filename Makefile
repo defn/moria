@@ -42,9 +42,6 @@ backup:
 	$(MAKE) down
 	$(MAKE) begin
 
-renew:
-	aws-okta env fogg-security-us-west-1 | grep ' AWS_' | sed 's#export ##' > .env
-
 begin:
 	touch .env
 	docker-compose build
