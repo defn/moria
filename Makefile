@@ -25,21 +25,19 @@ test:
 	$(MAKE) end
 
 migrate:
-	$(MAKE) seal || true
+	$(MAKE) seal
 	vault operator migrate -config config/migrate.hcl
-	$(MAKE) down
-	$(MAKE) begin
+	$(MAKE) restart
 
 backup:
-	$(MAKE) seal || true
-	vault operator migrate -config config/backup.hcl
-	cd backup && git add -u . && git commit -m backup
-	$(MAKE) down
-	$(MAKE) begin
+	$(MAKE) seal
+	vault operator migrate -config config/vault/backup.hcl
+	$(MAKE) restart
 
 begin:
 	docker-compose build
 	$(MAKE) recreate
+	sleep 5
 
 end:
 	$(MAKE) clean
@@ -49,7 +47,12 @@ root-login:
 	@vault login "$(shell cat backup/.vault-root-token)" >/dev/null
 
 seal:
+	$(MAKE) root-login
 	vault operator seal
 
 clean:
 	$(MAKE) seal
+
+ddb s3 file:
+	ln -nfs vault-$@ config/vault
+	$(MAKE) begin
