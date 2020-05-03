@@ -45,7 +45,7 @@ begin:
 	docker-compose build
 	$(MAKE) renew
 	$(MAKE) recreate
-	rm -f .env
+	touch .env
 	$(MAKE) root-login
 	$(MAKE) root-login2
 
@@ -57,7 +57,7 @@ root-login:
 	@bin/vault-ddb login "$(shell cat backup/.vault-root-token)" >/dev/null
 
 seal:
-	$bin/vault-ddb operator seal
+	bin/vault-ddb operator seal
 
 root-login2:
 	@bin/vault-s3 login "$(shell cat backup/.vault-root-token)" >/dev/null
@@ -66,5 +66,5 @@ seal2:
 	bin/vault-s3 operator seal
 
 clean:
-	rm -rf .env
+	touch .env
 	$(MAKE) seal seal2
