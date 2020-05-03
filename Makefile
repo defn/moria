@@ -55,13 +55,13 @@ end:
 	$(MAKE) down 
 
 root-login:
-	@$(RENEW) bin/vault-ddb login "$(shell cat backup/.vault-root-token)"
+	@$(RENEW) bin/vault-ddb login "$(shell cat backup/.vault-root-token)" >/dev/null
 
 seal:
 	$(RENEW) bin/vault-ddb operator seal
 
 root-login2:
-	@$(RENEW) bin/vault-s3 login "$(shell cat backup/.vault-root-token)"
+	@$(RENEW) bin/vault-s3 login "$(shell cat backup/.vault-root-token)" >/dev/null
 
 seal2:
 	$(RENEW) bin/vault-s3 operator seal
