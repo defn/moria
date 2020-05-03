@@ -25,19 +25,17 @@ test:
 	$(MAKE) end
 
 migrate:
-	$(MAKE) renew
 	$(MAKE) seal || true
 	$(MAKE) seal2 || true
-	$(RENEW) bin/vault-ddb operator migrate -config config/migrate.hcl
+	bin/vault-ddb operator migrate -config config/migrate.hcl
 	$(MAKE) down
 	$(MAKE) begin
 
 backup:
-	$(MAKE) renew
 	$(MAKE) seal || true
 	$(MAKE) seal2 || true
-	$(RENEW) bin/vault-ddb operator migrate -config config/backup-ddb.hcl
-	$(RENEW) bin/vault-s3 operator migrate -config config/backup-s3.hcl
+	bin/vault-ddb operator migrate -config config/backup-ddb.hcl
+	bin/vault-s3 operator migrate -config config/backup-s3.hcl
 	cd backup && git add -u . && git commit -m backup
 	$(MAKE) down
 	$(MAKE) begin
@@ -47,6 +45,7 @@ begin:
 	docker-compose build
 	$(MAKE) renew
 	$(MAKE) recreate
+	rm -f .env
 	$(MAKE) root-login
 	$(MAKE) root-login2
 
@@ -55,16 +54,16 @@ end:
 	$(MAKE) down 
 
 root-login:
-	@$(RENEW) bin/vault-ddb login "$(shell cat backup/.vault-root-token)" >/dev/null
+	@bin/vault-ddb login "$(shell cat backup/.vault-root-token)" >/dev/null
 
 seal:
-	$(RENEW) bin/vault-ddb operator seal
+	$bin/vault-ddb operator seal
 
 root-login2:
-	@$(RENEW) bin/vault-s3 login "$(shell cat backup/.vault-root-token)" >/dev/null
+	@bin/vault-s3 login "$(shell cat backup/.vault-root-token)" >/dev/null
 
 seal2:
-	$(RENEW) bin/vault-s3 operator seal
+	bin/vault-s3 operator seal
 
 clean:
 	rm -rf .env

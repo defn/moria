@@ -1,7 +1,5 @@
-RENEW := aws-okta exec example --
-
 renew:
 	aws-okta env example  | grep ' AWS_' | sed 's#export ##' > .env
 
 login:
-	$(RENEW) bin/vault login -method=aws header_value=vault role=example >/dev/null
+	aws-okta exec example -- bin/vault login -method=aws header_value=vault role=example >/dev/null
