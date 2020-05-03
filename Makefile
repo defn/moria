@@ -61,11 +61,8 @@ begin:
 	cd backup && git-crypt lock
 
 end:
-	$(MAKE) renew
-	$(MAKE) seal || true
-	$(MAKE) seal2 || true
+	$(MAKE) clean
 	$(MAKE) down 
-	rm -f .aws/credentials
 
 lock:
 	git-crypt lock
