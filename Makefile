@@ -84,4 +84,5 @@ seal2:
 
 clean:
 	rm -rf .aws
-	cd backup && git-crypt lock
+	cd backup && git-crypt lock || true
+	$(MAKE) seal seal2
