@@ -36,8 +36,11 @@ backup:
 	$(MAKE) renew
 	$(MAKE) seal || true
 	$(MAKE) seal2 || true
+	cd backup && git-crypt unlock
 	$(RENEW) bin/vault-ddb operator migrate -config config/backup-ddb.hcl
 	$(RENEW) bin/vault-s3 operator migrate -config config/backup-s3.hcl
+	cd backup && git add -u . && git commit -m backup
+	cd backup && git-crypt lock
 	$(MAKE) down
 	$(MAKE) begin
 
@@ -52,8 +55,10 @@ begin:
 	$(MAKE) renew
 	$(MAKE) recreate
 	sleep 5
+	cd backup && git-crypt unlock
 	$(MAKE) root-login
 	$(MAKE) root-login2
+	cd backup && git-crypt lock
 
 end:
 	$(MAKE) renew
