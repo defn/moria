@@ -81,3 +81,7 @@ root-login2:
 
 seal2:
 	$(RENEW) bin/vault-s3 operator seal
+
+clean:
+	rm -rf .aws
+	cd backup && git-crypt lock
