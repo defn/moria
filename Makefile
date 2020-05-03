@@ -43,23 +43,13 @@ backup:
 	$(MAKE) begin
 
 renew:
-	mkdir -p .aws
-	touch .aws/credentials.tmp
-	aws-okta write-to-credentials --assume-role-ttl=15m fogg-security .aws/credentials.tmp
-	perl -pe 's{^\[.*}{[default]}' -i .aws/credentials.tmp
-	mv -f .aws/credentials.tmp .aws/credentials
-	$(MAKE) renew-copy
-	rm -f .aws/credentials
-
-renew-copy:
-	docker cp .aws/credentials "$(shell docker-compose ps -q vault-ddb)":.aws/
-	docker cp .aws/credentials "$(shell docker-compose ps -q vault-s3)":.aws/
+	aws-okta env fogg-security-us-west-1 | grep ' AWS_' | sed 's#export ##' > .env
 
 begin:
+	touch .env
 	docker-compose build
-	$(MAKE) recreate
 	$(MAKE) renew
-	cd backup && git-crypt unlock
+	$(MAKE) recreate
 	$(MAKE) root-login
 	$(MAKE) root-login2
 
@@ -80,5 +70,5 @@ seal2:
 	$(RENEW) bin/vault-s3 operator seal
 
 clean:
-	rm -rf .aws
+	rm -rf .env
 	$(MAKE) seal seal2

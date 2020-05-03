@@ -1,3 +1,4 @@
 .aws
 backup
 Makefile.site
+.env

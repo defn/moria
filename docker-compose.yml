@@ -4,6 +4,7 @@ services:
     build: .
     hostname: "vault"
     restart: on-failure
+    env_file: .env
     environment:
       VAULT_ADDR: http://127.0.0.1:8200
     ports:
@@ -13,6 +14,7 @@ services:
     build: .
     hostname: "vault"
     restart: on-failure
+    env_file: .env
     environment:
       VAULT_ADDR: http://127.0.0.1:8200
     ports:
