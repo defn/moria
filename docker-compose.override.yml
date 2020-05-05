@@ -1,0 +1,11 @@
+version: '3.7'
+services:
+  vault:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.vault.rule=Host(`vault.whoa.bot`)"
+
+networks:
+  default:
+    external:
+      name: kitt

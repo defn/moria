@@ -17,11 +17,3 @@ services:
       - 8200
     volumes:
       - ./backup:/vault
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.vault.rule=Host(`vault.whoa.bot`)"
-
-networks:
-  default:
-    external:
-      name: kitt
