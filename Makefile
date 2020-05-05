@@ -37,7 +37,6 @@ backup:
 begin:
 	docker-compose build
 	$(MAKE) recreate
-	sleep 5
 
 end:
 	$(MAKE) clean

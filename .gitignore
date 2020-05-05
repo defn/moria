@@ -1,3 +1,4 @@
 backup
 Makefile.site
 config/vault
+.env
