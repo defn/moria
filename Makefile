@@ -28,18 +28,24 @@ migrate:
 	$(MAKE) seal
 	vault operator migrate -config config/migrate.hcl
 	$(MAKE) restart
+	$(MAKE) wait
 
 backup:
 	$(MAKE) seal
 	vault operator migrate -config config/vault/backup.hcl
 	$(MAKE) restart
+	$(MAKE) wait
 
 begin:
 	$(MAKE) recreate
+	$(MAKE) wait
 
 end:
 	$(MAKE) clean
 	$(MAKE) down 
+
+wait:
+	@while true; do if [[ "$$(vault status -format json 2>/dev/null | jq -r '.sealed')" == "false" ]]; then break; fi; date; sleep 1; done
 
 root-login:
 	@vault login "$(shell cat backup/.vault-root-token)" >/dev/null
