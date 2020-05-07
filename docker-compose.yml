@@ -17,3 +17,5 @@ services:
       - 8200
     volumes:
       - ./backup:/vault
+    cap_add:
+      - IPC_LOCK

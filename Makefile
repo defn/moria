@@ -45,7 +45,7 @@ end:
 	$(MAKE) down 
 
 wait:
-	@while true; do if [[ "$$(vault status -format json 2>/dev/null | jq -r '.sealed')" == "false" ]]; then break; fi; date; sleep 1; done
+	@set -x; while true; do if [[ "$$(vault status -format json | jq -r '.sealed')" == "false" ]]; then break; fi; date; sleep 1; done
 
 root-login:
 	@vault login "$(shell cat backup/.vault-root-token)" >/dev/null
