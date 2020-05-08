@@ -59,4 +59,5 @@ clean:
 
 ddb s3 file-ddb file-s3:
 	ln -nfs vault-$@ config/vault
+	docker-compose build
 	$(MAKE) begin
