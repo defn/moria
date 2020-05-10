@@ -1,6 +1,5 @@
-storage_source "dynamodb" {
-  table = "defnnn"
-  region = "us-west-1"
+storage_source "file" {
+  path = "backup/vault-ddb"
 }
 
 storage_destination "s3" {

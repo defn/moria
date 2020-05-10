@@ -24,9 +24,9 @@ test:
 	$(MAKE) begin
 	$(MAKE) end
 
-migrate:
+migrate-ddb migrate-s3:
 	$(MAKE) seal
-	vault operator migrate -config config/migrate.hcl
+	vault operator migrate -config config/$@.hcl
 	$(MAKE) restart
 	$(MAKE) wait
 
