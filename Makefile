@@ -26,13 +26,13 @@ test:
 
 migrate-ddb migrate-s3:
 	$(MAKE) seal
-	vault operator migrate -config config/$@.hcl
+	$(RENEW) vault operator migrate -config config/$@.hcl
 	$(MAKE) restart
 	$(MAKE) wait
 
 backup:
 	$(MAKE) seal
-	vault operator migrate -config config/vault/backup.hcl
+	$(RENEW) vault operator migrate -config config/vault/backup.hcl
 	$(MAKE) restart
 	$(MAKE) wait
 
