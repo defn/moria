@@ -4,4 +4,4 @@ login:
 	$(RENEW) bin/vault login -method=aws header_value=vault role=example >/dev/null
 
 bash:
-	$(RENEW) env VAULT_ADDR=https://vault.whoa.bot bash
+	$(RENEW) env VAULT_ADDR=https://vault.$(KITT_DOMAIN) bash
