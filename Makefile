@@ -26,40 +26,19 @@ build: # Build container
 	@echo
 	drone exec --pipeline $@
 
-edit:
-	docker-compose -f docker-compose.docs.yml up --quiet-pull
-
-logs: # Logs for docker-compose
-	docker-compose logs -f
-
-up: # Run home container with docker-compose
-	$(RENEW) docker-compose up -d
-
-down: # Shut down home container
-	docker-compose down
-
-restart: # Restart home container
-	$(RENEW) docker-compose restart
-
-recreate: # Recreate home container
-	-$(MAKE) down 
-	$(MAKE) up
-
-include Makefile.site
-
 test:
 	$(MAKE) begin
 	$(MAKE) end
 
 migrate-ddb migrate-s3:
 	$(MAKE) seal
-	$(RENEW) vault operator migrate -config config/$@.hcl
+	vault operator migrate -config config/$@.hcl
 	$(MAKE) restart
 	$(MAKE) wait
 
 backup:
 	$(MAKE) seal
-	$(RENEW) vault operator migrate -config config/vault/backup.hcl
+	vault operator migrate -config config/vault/backup.hcl
 	$(MAKE) restart
 	$(MAKE) wait
 
