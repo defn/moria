@@ -1,7 +1,0 @@
-RENEW := aws-okta exec example --
-
-login:
-	$(RENEW) bin/vault login -method=aws header_value=vault role=example >/dev/null
-
-bash:
-	$(RENEW) env VAULT_ADDR=https://vault.$(KITT_DOMAIN) bash

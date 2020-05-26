@@ -1,5 +1,4 @@
 backup
-Makefile.site
 config/vault
 .env
 etc/data
