@@ -8,17 +8,17 @@ menu:
 migrate-ddb migrate-s3:
 	$(MAKE) seal
 	vault operator migrate -config config/$@.hcl
-	$(MAKE) restart
+	kitt restart
 	$(MAKE) wait
 
 backup:
 	$(MAKE) seal
 	vault operator migrate -config config/vault/backup.hcl
-	$(MAKE) restart
+	kitt restart
 	$(MAKE) wait
 
 begin:
-	$(MAKE) recreate
+	kitt recreate
 	$(MAKE) wait
 
 end:
