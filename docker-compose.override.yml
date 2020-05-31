@@ -8,7 +8,7 @@ services:
   consul:
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.consul.rule=Host(`consul.{KITT_DOMAIN}`)"
+      - "traefik.http.routers.consul.rule=Host(`consul.${KITT_DOMAIN}`)"
       - "traefik.http.services.consul.loadbalancer.server.port=8500"
 
 networks:
