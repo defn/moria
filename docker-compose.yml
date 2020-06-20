@@ -18,7 +18,7 @@ services:
     cap_add:
       - IPC_LOCK
   vault-proxy:
-    image: letfn/consul-envoy:v1.8.0-rc1-v0.14.1
+    image: letfn/consul-envoy:v1.8.0-v0.14.1
     environment:
       CONSUL_HTTP_ADDR: 169.254.32.1:8500
       CONSUL_GRPC_ADDR: 169.254.32.1:8502
@@ -32,7 +32,7 @@ services:
   consul:
     environment:
       - "CONSUL_LOCAL_CONFIG={\"skip_leave_on_interrupt\": true, \"disable_update_check\": true}"
-    image: docker.io/library/consul:1.8.0-rc1
+    image: docker.io/library/consul:1.8.0
     command: agent -client=0.0.0.0 -server -bootstrap-expect 1 -ui
     volumes:
       - "./etc/data/consul:/consul/data"
