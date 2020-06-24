@@ -17,6 +17,11 @@ services:
       - ./backup:/vault
     cap_add:
       - IPC_LOCK
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.vault.entrypoints=https"
+      - "traefik.http.routers.vault.rule=HostRegexp(`vault.{domain:.+}`)"
+      - "traefik.http.services.vault.loadbalancer.server.port=8200"
   vault-proxy:
     image: letfn/consul-envoy:v1.8.0-v0.14.1
     environment:
@@ -36,3 +41,13 @@ services:
     command: agent -client=0.0.0.0 -server -bootstrap-expect 1 -ui
     volumes:
       - "./etc/data/consul:/consul/data"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.vault-consul.entrypoints=https"
+      - "traefik.http.routers.vault-consul.rule=HostRegexp(`vault-consul.{domain:.+}`)"
+      - "traefik.http.services.vault-consul.loadbalancer.server.port=8500"
+
+networks:
+  default:
+    external:
+      name: kitt

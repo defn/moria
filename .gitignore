@@ -2,3 +2,5 @@ backup
 config/vault
 .env
 etc/data
+
+docker-compose.override.yml
