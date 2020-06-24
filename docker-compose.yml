@@ -34,18 +34,6 @@ services:
       - "./etc/central_config:/central_config"
     command: ["consul", "connect", "envoy","-sidecar-for", "vault"]
     network_mode: "service:vault"
-  consul:
-    environment:
-      - "CONSUL_LOCAL_CONFIG={\"skip_leave_on_interrupt\": true, \"disable_update_check\": true}"
-    image: docker.io/library/consul:1.8.0
-    command: agent -client=0.0.0.0 -server -bootstrap-expect 1 -ui
-    volumes:
-      - "./etc/data/consul:/consul/data"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.vault-consul.entrypoints=https"
-      - "traefik.http.routers.vault-consul.rule=HostRegexp(`vault-consul.{domain:.+}`)"
-      - "traefik.http.services.vault-consul.loadbalancer.server.port=8500"
 
 networks:
   default:
