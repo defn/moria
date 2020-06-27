@@ -17,13 +17,16 @@ backup:
 	kitt restart
 	$(MAKE) wait
 
-begin:
-	kitt recreate
+setup:
+	if [[ -f .env ]]; then source .env; export MORIA_LOADER; fi; $(MAKE) setup-inner
+
+setup-inner:
+	$(MORIA_LOADER) kitt recreate
 	$(MAKE) wait
 
-end:
+teardown:
 	$(MAKE) clean
-	$(MAKE) down 
+	kitt down
 
 wait:
 	@set -x; while true; do if [[ "$$(vault status -format json | jq -r '.sealed')" == "false" ]]; then break; fi; date; sleep 1; done
@@ -41,4 +44,4 @@ clean:
 ddb s3 file-ddb file-s3:
 	ln -nfs vault-$@ config/vault
 	docker-compose build
-	$(MAKE) begin
+	$(MAKE) setup

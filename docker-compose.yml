@@ -23,7 +23,7 @@ services:
       - "traefik.http.routers.vault.rule=HostRegexp(`vault.{domain:.+}`)"
       - "traefik.http.services.vault.loadbalancer.server.port=8200"
   vault-proxy:
-    image: letfn/consul-envoy:v1.8.0-v0.14.1
+    image: letfn/consul-envoy:v1.8.0-v1.14.2
     environment:
       CONSUL_HTTP_ADDR: 169.254.32.1:8500
       CONSUL_GRPC_ADDR: 169.254.32.1:8502
