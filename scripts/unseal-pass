@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+index=1
+while true
+    do
+
+        if $(pass moria/keys_$index > /dev/null 2>&1); then
+            vault operator unseal > /dev/null 2>&1 $(pass moria/keys_$index)
+	    index=$((index + 1))
+        else
+            break
+        fi
+
+    done
+
+vault status

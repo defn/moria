@@ -1,6 +1,7 @@
 backup
 config/vault
 .env
+.init.csv
 etc/data
 
 docker-compose.override.yml

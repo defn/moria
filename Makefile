@@ -35,6 +35,14 @@ seal:
 	$(MAKE) root-login
 	vault operator seal
 
+init:
+	./scripts/init
+	pass import -f bitwarden .init.csv
+	$(MAKE) unseal
+
+unseal:
+	./scripts/unseal-pass
+
 clean:
 	$(MAKE) seal
 
