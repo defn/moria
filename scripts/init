@@ -8,7 +8,7 @@ status = ""
 init = ""
 path = os.path.split(os.path.dirname(os.path.realpath(__file__)))[0]
 url = "vault.{}".format(os.getenv("KITT_DOMAIN", "kitt.run"))
-path = "{}/.initialized".format(path)
+ize = "{}/.initialized".format(path)
 
 #curl https://vault.$KITT_DOMAIN/v1/sys/seal-status
 try:
@@ -42,8 +42,8 @@ if "initialized" in status and not status["initialized"]:
                 myTemp.write("moria,,login,{0},,,,,{1},\n".format(index, init[index]))
 
     # if .initialized file does not exist, make update will override any existing pass moria secrets
-    if os.path.exists(path):
+    if os.path.exists(ize):
         try:
-            os.remove(path)
+            os.remove(ize)
         except:
-            print("error while deleting file {}".format(path))
+            print("error while deleting file {}".format(ize))
