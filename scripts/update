@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+
+if ! $(which pass > /dev/null 2>&1); then
+    echo "aborting. please install pass (passwordstore.org) and pass-update (github.com/roddhjav/pass-update)"
+    exit 1
+else
+    [ -r .init.csv ] && pass import bitwarden .init.csv
+fi

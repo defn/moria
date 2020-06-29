@@ -36,12 +36,12 @@ seal:
 	vault operator seal
 
 init:
-	./scripts/init
-	pass import -f bitwarden .init.csv
-	$(MAKE) unseal
+	@./scripts/init
+	@./scripts/update
+	@./scripts/unseal
 
 unseal:
-	./scripts/unseal-pass
+	@./scripts/unseal
 
 clean:
 	$(MAKE) seal
