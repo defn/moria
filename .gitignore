@@ -4,3 +4,4 @@ config/vault
 etc/data
 
 docker-compose.override.yml
+pyinfra-debug.log

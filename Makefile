@@ -38,6 +38,13 @@ seal:
 	$(MAKE) root-login
 	vault operator seal
 
+init:
+	@pyinfra @local scripts/init.py
+	@pyinfra @local scripts/unseal.py
+
+unseal:
+	@pyinfra @local scripts/unseal.py
+
 clean:
 	$(MAKE) seal
 
