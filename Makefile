@@ -36,12 +36,11 @@ seal:
 	vault operator seal
 
 init:
-	@./scripts/init
-	@./scripts/update
-	@./scripts/unseal
+	@pyinfra @local scripts/init.py
+	@pyinfra @local scripts/unseal.py
 
 unseal:
-	@./scripts/unseal
+	@pyinfra @local scripts/unseal.py
 
 clean:
 	$(MAKE) seal
